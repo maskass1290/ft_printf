@@ -6,13 +6,13 @@
 /*   By: macholle <macholle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/24 15:31:35 by macholle          #+#    #+#             */
-/*   Updated: 2025/10/24 15:31:39 by macholle         ###   ########.fr       */
+/*   Updated: 2025/10/24 17:00:59 by macholle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-char	*ft_charsrch(const char *s, int c)
+static char	*ft_charsrch(const char *s, int c)
 {
 	while (*s)
 	{
@@ -25,7 +25,7 @@ char	*ft_charsrch(const char *s, int c)
 	return (NULL);
 }
 
-int	ft_type_check(const char *input, va_list args)
+static int	ft_type_check(const char *input, va_list args)
 {
 	char	c;
 
