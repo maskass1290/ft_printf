@@ -6,23 +6,21 @@
 /*   By: macholle <macholle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/24 15:31:35 by macholle          #+#    #+#             */
-/*   Updated: 2025/10/24 17:00:59 by macholle         ###   ########.fr       */
+/*   Updated: 2025/10/30 20:53:55 by macholle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static char	*ft_charsrch(const char *s, int c)
+static int	ft_charsrch(const char *s, int c)
 {
 	while (*s)
 	{
 		if (*s == (char)c)
-			break ;
+			return (1);
 		s++;
 	}
-	if (*s == (char)c)
-		return ((char *)s);
-	return (NULL);
+	return (0);
 }
 
 static int	ft_type_check(const char *input, va_list args)
@@ -43,8 +41,7 @@ static int	ft_type_check(const char *input, va_list args)
 		return (ft_printf_nbrs(87, 16, va_arg(args, unsigned int)));
 	if (*input == 'X')
 		return (ft_printf_nbrs(55, 16, va_arg(args, unsigned int)));
-	c = va_arg(args, int);
-	return (write(1, &c, 1));
+	return (c = va_arg(args, int), write(1, &c, 1));
 }
 
 int	ft_printf(const char *input, ...)
@@ -62,12 +59,15 @@ int	ft_printf(const char *input, ...)
 			if (ft_charsrch("cspdiuxX", *input))
 				i += ft_type_check(input, args);
 			else if (*input == '%')
-				i += write (1, "%", 1);
+				i += write(1, "%", 1);
+			else if (!(*input))
+				return (-1);
+			else
+				i += write (1, --input, 1);
 		}
 		else
 			i += write(1, input, 1);
 		input++;
 	}
-	va_end(args);
-	return (i);
+	return (va_end(args), i);
 }

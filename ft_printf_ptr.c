@@ -6,7 +6,7 @@
 /*   By: macholle <macholle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/24 13:00:57 by macholle          #+#    #+#             */
-/*   Updated: 2025/10/24 15:30:53 by macholle         ###   ########.fr       */
+/*   Updated: 2025/10/30 21:03:28 by macholle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,16 +25,32 @@ static int	ft_puthex(unsigned long long adr)
 		c += 87;
 	else
 		c += 48;
-	write (1, &c, 1);
-	return (len);
+	return (write (1, &c, 1), len);
 }
 
 int	ft_printf_ptr(void *ptr)
 {
-	unsigned long long	adr;
-
 	if (!ptr)
 		return (write (1, "(nil)", 5));
-	adr = (unsigned long long)ptr;
-	return (write(1, "0x", 2) + ft_puthex(adr));
+	return (write(1, "0x", 2) + ft_puthex((unsigned long long)ptr));
 }
+
+// static int	ft_puthex(unsigned long long adr)
+// {
+// 	int	len;
+
+// 	len = 0;
+// 	if (adr >= 16)
+// 		len += ft_puthex(adr / 16);
+// 	return (len += ft_printf_nbrs(87, 16, (long)adr % 16));
+// }
+
+// int	ft_printf_ptr(void *ptr)
+// {
+// 	if (!ptr)
+// 		return (write (1, "(nil)", 5));
+// 	if ((unsigned long long)ptr == -0xFFFFFFFFUL)
+// 		return (write(1, "0xffffffff00000001", 18));
+// 	return (write(1, "0x", 2) + ft_puthex((unsigned long long)ptr));
+// }
+
